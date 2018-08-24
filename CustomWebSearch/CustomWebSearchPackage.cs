@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
 
 namespace CustomWebSearch
@@ -33,6 +34,7 @@ namespace CustomWebSearch
 	[ProvideOptionPage(typeof(OptionPage), "Custom Web Search", "General", 0, 0, true)]
 	[SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
 	[ProvideMenuResource("Menus.ctmenu", 1)]
+    [ProvideAutoLoad(UIContextGuids.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
 	public sealed class CustomWebSearchPackage : AsyncPackage
 	{
 		/// <summary>

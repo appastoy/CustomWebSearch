@@ -4,6 +4,7 @@
         <Identity Id="CustomWebSearch.e1540dcb-f046-492e-8b6c-6c4bd23a38ae" Version="1.0" Language="en-US" Publisher="appastoy" />
         <DisplayName>CustomWebSearch</DisplayName>
         <Description xml:space="preserve">It's a visual studio extension for custom web search your selected keyword in text editor.</Description>
+        <MoreInfo>https://github.com/appastoy/CustomWebSearch</MoreInfo>
         <License>LICENSE.txt</License>
     </Metadata>
     <Installation>
