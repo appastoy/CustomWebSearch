@@ -3,11 +3,10 @@ using System.Windows.Forms;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio;
-using System.IO;
 
 namespace CustomWebSearch
 {
-	public partial class OptionPageControl : UserControl
+    public partial class OptionPageControl : UserControl
 	{
 		public const int QueryCount = 10;
 
@@ -61,7 +60,7 @@ namespace CustomWebSearch
 		{
 			if (package != null) { return; }
 
-			var vsShell = ServiceProvider.GlobalProvider.GetService(typeof(IVsShell)) as IVsShell;
+            var vsShell = ServiceProvider.GlobalProvider.GetService(typeof(IVsShell)) as IVsShell;
 			var result = vsShell.IsPackageLoaded(new Guid(CustomWebSearchPackage.PackageGuidString), out var foundPackage);
 			if (result == VSConstants.S_OK)
 			{
