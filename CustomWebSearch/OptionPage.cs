@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.Shell;
-using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace CustomWebSearch
