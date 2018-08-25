@@ -251,6 +251,7 @@ set CalculateMD5=$(SolutionDir)\BatchScripts\CalculateMD5.bat
 set OutputDir=$(SolutionDir)\Output\
 set OutputHashDir=$(ProjectDir)OutputHash\
 
+
 set VSIXManifestName=source.extension.vsixmanifest
 set VSIXManifestHashPath=%25OutputHashDir%25%25VSIXManifestName%25.md5
 set TargetVSIXManifestPath=$(ProjectDir)%25VSIXManifestName%25
@@ -261,31 +262,32 @@ set TargetDllPath=$(TargetDir)%25DllName%25
 
 set VSIXName=$(TargetName).vsix
 set TargetVSIXPath=$(TargetDir)%25VSIXName%25
+set OutputVSIXPath=%25OutputDir%25%25VSIXName%25
 
 echo.
 echo ## Starting to Batch... ##
 echo.
 
-if not exist "%25TargetVSIXPath%25" (
-	echo. ! "%25VSIXName%25" file is not found in "Output".
+if not exist "%25OutputVSIXPath%25" (
+	echo. ~~ "%25VSIXName%25" file is not found in "Output" in Solution Directory.
 	goto :ExportOutputHash
 )
 
 echo * Comparing VSIXManifest hash...
 call :CompareHash "%25VSIXManifestHashPath%25" "%25TargetVSIXManifestPath%25" IsSame
 if not "%25IsSame%25"=="Same" (
-	echo. ! "%25VSIXManifestName%25" has changed.
+	echo. ~~ "%25VSIXManifestName%25" has changed.
 	goto :ExportOutputHash
 )
 
 echo * Comparing Dll hash...
 call :CompareHash "%25DllHashPath%25" "%25TargetDllPath%25" IsSame
 if not "%25IsSame%25"=="Same" (
-	echo. ! "%25DllName%25" has changed.
+	echo. ~~ "%25DllName%25" has changed.
 	goto :ExportOutputHash
 )
 
-echo * No changes.
+echo * There are no changes.
 goto :End
 
 :ExportOutputHash
