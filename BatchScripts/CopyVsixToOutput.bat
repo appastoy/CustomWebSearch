@@ -73,12 +73,12 @@ echo.
 exit /b 0
 
 :CompareHash
-setlocal EnableDelayedExpansion
+setlocal
 if exist "%~1" for /f "tokens=1 usebackq" %%a in ("%~1") do (
 	if not "%%a"=="" set Hash1=%%a
 )
 call "%CalculateMD5%" "%~2" Hash2
 (endlocal 
-	if !Hash1!==!Hash2! set "%~3=Same"
+	if %Hash1%==%Hash2% set "%~3=Same"
 )
 goto :eof
