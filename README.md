@@ -4,6 +4,7 @@ You can select the web browser you want.
 It provides templates of web query format.
   - Google Search
   - Google Translate
+  - Microsoft MSDN
   - Stack Overflow
   - Unity Document
   - Unity Answer  
