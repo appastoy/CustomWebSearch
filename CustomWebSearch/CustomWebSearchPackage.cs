@@ -3,6 +3,7 @@ using System.ComponentModel.Design;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.Shell;
@@ -37,10 +38,12 @@ namespace CustomWebSearch
     [ProvideAutoLoad(UIContextGuids.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
 	public sealed class CustomWebSearchPackage : AsyncPackage
 	{
-		/// <summary>
-		/// CustomWebSearchPackage GUID string.
-		/// </summary>
-		public const string PackageGuidString = "298c1395-10c9-4c1b-b6e5-d083ba50e266";
+        public static CustomWebSearchPackage Instance { get; private set; }
+
+        /// <summary>
+        /// CustomWebSearchPackage GUID string.
+        /// </summary>
+        public const string PackageGuidString = "298c1395-10c9-4c1b-b6e5-d083ba50e266";
 
 		public const string PackageCmdSetGuidString = "db27c93a-fcc9-48e5-8448-9ffe640593b0";
 
@@ -49,11 +52,13 @@ namespace CustomWebSearch
 		/// </summary>
 		public CustomWebSearchPackage()
 		{
-			// Inside this method you can place any initialization code that does not require
-			// any Visual Studio service because at this point the package object is created but
-			// not sited yet inside Visual Studio environment. The place to do all the other
-			// initialization is the Initialize method.
-		}
+            // Inside this method you can place any initialization code that does not require
+            // any Visual Studio service because at this point the package object is created but
+            // not sited yet inside Visual Studio environment. The place to do all the other
+            // initialization is the Initialize method.
+            Instance = this;
+
+        }
 
 		#region Package Members
 
@@ -69,22 +74,26 @@ namespace CustomWebSearch
 			// When initialized asynchronously, the current thread may be a background thread at this point.
 			// Do any initialization that requires the UI thread after switching to the UI thread.
 			await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
-
 			BindMenus(); 
 		}
 
 		void BindMenus()
 		{
 			var menuCommandService = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            var mainMenuCommand = new OleMenuCommand(null, new CommandID(new Guid(PackageCmdSetGuidString), Constants.CommandIdMainMenu));
+            mainMenuCommand.BeforeQueryStatus += MainMenu_BeforeQueryStatus;
+            menuCommandService.AddCommand(mainMenuCommand);
+
 			for (int i = 0; i < OptionPageControl.QueryCount; i++)
 			{
 				int currentIndex = i;
-				BindMenuHandler(menuCommandService, Constants.CommandIdQuery + i, (s, e) => OnClickQuery(currentIndex));
+				BindMenuHandler(menuCommandService, Constants.CommandIdQuery + i, i, (s, e) => OnClickQuery(currentIndex));
 			}
-			BindMenuHandler(menuCommandService, Constants.CommandIdOpenOption, OnOpenOption, false);
-		}
+			var openMenu = BindMenuHandler(menuCommandService, Constants.CommandIdOpenOption, -1, OnOpenOption, false);
+            openMenu.Text = "&Option Option...";
+        }
 
-		void BindMenuHandler(OleMenuCommandService menuCommand, int cmdId, EventHandler handler, bool bindEnableCheck = true)
+		OleMenuCommand BindMenuHandler(OleMenuCommandService menuCommand, int cmdId, int index, EventHandler handler, bool bindEnableCheck = true)
 		{
 			var command = new CommandID(new Guid(PackageCmdSetGuidString), cmdId);
 			OleMenuCommand menuCmd = new OleMenuCommand(handler, command);
@@ -92,62 +101,82 @@ namespace CustomWebSearch
 			if (bindEnableCheck)
 			{
 				menuCmd.Enabled = false;
-				menuCmd.BeforeQueryStatus += MenuCmd_BeforeQueryStatus;
+				menuCmd.BeforeQueryStatus += (s,e) => MenuCmd_BeforeQueryStatus(s, index);
 			}
+
+            return menuCmd;
 		}
 
-		private void MenuCmd_BeforeQueryStatus(object sender, EventArgs e)
+        void MainMenu_BeforeQueryStatus(object sender, EventArgs e)
+        {
+            var cmd = (OleMenuCommand)sender;
+            cmd.Text = "Cusom &Web Search";
+        }
+
+		private void MenuCmd_BeforeQueryStatus(object sender, int index)
 		{
 			var cmd = (OleMenuCommand)sender;
-			cmd.Enabled = HasTextSelection();
+            
+            var optionPage = GetDialogPage(typeof(OptionPage)) as OptionPage;
+            var queryData = optionPage.Queries[index];
+            if (queryData.TemplateType == QueryTemplateType.None ||
+                string.IsNullOrEmpty(queryData.QueryFormat))
+            {
+                cmd.Visible = false;
+                cmd.Enabled = false;
+                return;
+            }
+
+            var keyword = GetCurrentKeyword();
+            cmd.Enabled = !string.IsNullOrEmpty(keyword);
+            cmd.Visible = true;
+
+            int queryNumber = (index + 1) % 10;
+            if (!cmd.Enabled)
+            {
+                cmd.Visible = true;
+                cmd.Text = $"Query &{queryNumber} - {optionPage.GetTemplateTypeName(index, queryData.TemplateType)}";
+            }
+            else
+            {
+                cmd.Visible = true;
+                cmd.Text = $"Query &{queryNumber} - \"{keyword}\" From {optionPage.GetTemplateTypeName(index, queryData.TemplateType)}";
+            }
 		}
 
-		bool HasTextSelection()
-		{
-			var dte = (EnvDTE.DTE)GetService(typeof(EnvDTE.DTE));
-			if (dte != null && dte.ActiveWindow != null)
-			{
-				return dte.ActiveWindow.Selection is EnvDTE.TextSelection;
-			}
+        string GetCurrentKeyword()
+        {
+            string keyword = string.Empty;
+            var dte = (EnvDTE.DTE)GetService(typeof(EnvDTE.DTE));
+            if (dte == null || dte.ActiveWindow == null) { return keyword; }
 
-			return false;
-		}
+            if (dte.ActiveWindow.Selection is EnvDTE.TextSelection textSelection)
+            {
+                if (string.IsNullOrEmpty(textSelection.Text))
+                {
+                    var activePoint = textSelection.ActivePoint;
+                    var absoluteCharOffset = activePoint.AbsoluteCharOffset;
 
-		void OnClickQuery(int index)
-		{
-			QueryToWebBrowser(index, GetCurrentKeyword());
-		}
+                    textSelection.WordLeft();
+                    textSelection.WordRight(true);
 
-		string GetCurrentKeyword()
-		{
-			string queryString = null;
-			var dte = (EnvDTE.DTE)GetService(typeof(EnvDTE.DTE));
-			if (dte != null && dte.ActiveWindow != null)
-			{
-				if (dte.ActiveWindow.Selection is EnvDTE.TextSelection textSelection)
-				{
-					if (string.IsNullOrEmpty(textSelection.Text))
-					{
-						textSelection.WordLeft();
-						textSelection.WordRight(true);
-					}
+                    keyword = textSelection.Text.Trim();
+                    textSelection.MoveToAbsoluteOffset(absoluteCharOffset);
+                }
+                else
+                {
+                    keyword = textSelection.Text.Trim();
+                }
+            }
+            return keyword ?? string.Empty;
+        }
 
-					queryString = textSelection.Text.Trim();
-					if (string.IsNullOrEmpty(queryString))
-					{
-						int absoluteOffset = textSelection.ActivePoint.AbsoluteCharOffset;
-						textSelection.MoveToAbsoluteOffset(absoluteOffset);
-					}
-					else if (textSelection.Text.Length > queryString.Length)
-					{
-						textSelection.CharLeft(true, textSelection.Text.Length - queryString.Length);
-					}
-				}
-			}
-			return queryString;
-		}
+        void OnClickQuery(int index)
+        {
+            QueryToWebBrowser(index, GetCurrentKeyword());
+        }
 
-		public void QueryToWebBrowser(int index, string keyword, bool test = false)
+        public void QueryToWebBrowser(int index, string keyword, bool test = false)
 		{
 			var optionPage = GetDialogPage(typeof(OptionPage)) as OptionPage;
 			var queryData = optionPage.Queries[index];
@@ -163,8 +192,8 @@ namespace CustomWebSearch
 			try
 			{
 				var dte = (EnvDTE.DTE)GetService(typeof(EnvDTE.DTE));
-				var keywordEncoded = WebUtility.UrlEncode(keyword);
-				url = string.Format(queryData.QueryFormat, keywordEncoded);
+				var keywordEncoded = string.IsNullOrEmpty(keyword) ? string.Empty : WebUtility.UrlEncode(keyword);
+				url = queryData.QueryFormat.Replace("{QUERY}", keywordEncoded);
 				WebBrowserUtility.NavigateUrl(dte, url, optionPage.WebBrowserType, optionPage.CustomWebBrowserPath);
 			}
 			catch (FormatException ex)

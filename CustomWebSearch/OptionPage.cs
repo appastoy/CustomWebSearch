@@ -7,7 +7,8 @@ namespace CustomWebSearch
 	public class QueryData
 	{
 		public QueryTemplateType TemplateType { get; set; }
-		public string QueryFormat { get; set; }
+        public string CustomTemplateName { get; set; }
+        public string QueryFormat { get; set; }
 
 		public QueryData()
 		{
@@ -33,10 +34,10 @@ namespace CustomWebSearch
 		{
 			new QueryData(QueryTemplateType.GoogleSearch),
 			new QueryData(QueryTemplateType.GoogleTranslate),
-			new QueryData(QueryTemplateType.StackOverflow),
+            new QueryData(QueryTemplateType.MicrosoftMSDN),
+            new QueryData(QueryTemplateType.StackOverflow),
 			new QueryData(QueryTemplateType.Unity3dDocument),
 			new QueryData(QueryTemplateType.Unity3dAnswer),
-			new QueryData(),
 			new QueryData(),
 			new QueryData(),
 			new QueryData(),
@@ -61,24 +62,18 @@ namespace CustomWebSearch
 		{
 			var queryData = Queries[queryIndex];
 			queryData.QueryFormat = queryFormat;
-			queryData.TemplateType = FindTemplateType(queryFormat);
+			queryData.TemplateType = Constants.FindTemplateType(queryFormat);
 		}
 
-		QueryTemplateType FindTemplateType(string queryFormat)
-		{
-			var result = QueryTemplateType.Custom;
-			int maxCount = (int)result;
-			for (int i = 0; i < maxCount; i++)
-			{
-				if (queryFormat == Constants.QueryTemplateFormats[i])
-				{
-					result = (QueryTemplateType)i;
-					break;
-				}
-			}
+        public string GetTemplateTypeName(int queryIndex, QueryTemplateType type)
+        {
+            if (type == QueryTemplateType.Custom)
+            {
+                return Queries[queryIndex].CustomTemplateName;
+            }
 
-			return result;
-		}
+            return Constants.GetTemplateTypeName(type);
+        }
 
 		protected override IWin32Window Window
 		{

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio;
+using System.Drawing;
 
 namespace CustomWebSearch
 {
@@ -11,21 +9,25 @@ namespace CustomWebSearch
 		public const int QueryCount = 10;
 
 		OptionPage optionPage;
-		CustomWebSearchPackage package;
 		ComboBox[] dropdownQueries = new ComboBox[QueryCount];
 		TextBox[] txtboxQueries = new TextBox[QueryCount];
+        TextBox[] txtboxCustomTemplateTypes = new TextBox[QueryCount];
+        Size txtboxQueryOriginalSize;
+        int txtboxQueryOriginalLocationX;
 
 		public OptionPageControl(OptionPage optionPage)
 		{
 			this.optionPage = optionPage;
 			InitializeComponent();
 			InitializeControls();
-			VerifyPackage();
 		}
 
 		void InitializeControls()
 		{
-			txtboxQueries[0] = txtboxQuery1;
+            txtboxQueryOriginalSize = txtboxQuery1.Size;
+            txtboxQueryOriginalLocationX = txtboxQuery1.Location.X;
+
+            txtboxQueries[0] = txtboxQuery1;
 			txtboxQueries[1] = txtboxQuery2;
 			txtboxQueries[2] = txtboxQuery3;
 			txtboxQueries[3] = txtboxQuery4;
@@ -51,26 +53,19 @@ namespace CustomWebSearch
 			dropdownWebBrowserType.Items.AddRange(Constants.WebBrowserTypeNames);
 			for (int i = 0; i < QueryCount; i++)
 			{
-				dropdownQueries[i].Items.Clear();
-				dropdownQueries[i].Items.AddRange(Constants.QueryTemplateTypeNames);
-			}
-		}
-
-		void VerifyPackage()
-		{
-			if (package != null) { return; }
-
-            var vsShell = ServiceProvider.GlobalProvider.GetService(typeof(IVsShell)) as IVsShell;
-			var result = vsShell.IsPackageLoaded(new Guid(CustomWebSearchPackage.PackageGuidString), out var foundPackage);
-			if (result == VSConstants.S_OK)
-			{
-				package = foundPackage as CustomWebSearchPackage;
-			}
-
-			if (package == null)
-			{
-				throw new NullReferenceException();
-			}
+                int currentIndex = i;
+                var dropdownQuery = dropdownQueries[i];
+                dropdownQuery.Items.Clear();
+                dropdownQuery.Items.AddRange(Constants.QueryTemplateTypeNames);
+                var txtboxCustomTemplateType = new TextBox();
+                txtboxCustomTemplateType.Parent = dropdownQuery.Parent;
+                txtboxCustomTemplateType.Location = txtboxQueries[i].Location;
+                txtboxCustomTemplateType.Size = new Size(dropdownQuery.Size.Width >> 1, dropdownQuery.Size.Height);
+                txtboxCustomTemplateType.Enabled = false;
+                txtboxCustomTemplateType.Visible = false;
+                txtboxCustomTemplateType.TextChanged += (s, e) => TxtboxCustomTemplateType_TextChanged(currentIndex);
+                txtboxCustomTemplateTypes[i] = txtboxCustomTemplateType;
+            }
 		}
 
 		public void UpdateProperties()
@@ -130,7 +125,32 @@ namespace CustomWebSearch
 
 			optionPage.SetQueryTemplateFormat(index, (QueryTemplateType)comboBox.SelectedIndex);
 			txtboxQueries[index].Text = optionPage.Queries[index].QueryFormat;
-		}
+
+            var queryData = optionPage.Queries[index];
+            var txtboxCustomTemplateType = txtboxCustomTemplateTypes[index];
+            var txtboxQuery = txtboxQueries[index];
+            if (queryData.TemplateType == QueryTemplateType.Custom)
+            {
+                var term = txtboxQueryOriginalLocationX - comboBox.Location.X - txtboxCustomTemplateType.Size.Width;
+                txtboxQuery.Location = new Point(txtboxQueryOriginalLocationX + term, txtboxQuery.Location.Y);
+                txtboxQuery.Size = new Size(txtboxQueryOriginalSize.Width - term, txtboxQueryOriginalSize.Height);
+                txtboxCustomTemplateType.Enabled = true;
+                txtboxCustomTemplateType.Visible = true;
+                if (string.IsNullOrEmpty(queryData.CustomTemplateName))
+                {
+                    queryData.CustomTemplateName = "Custom";
+                }
+                txtboxCustomTemplateType.Text = queryData.CustomTemplateName;
+            }
+            else
+            {
+                txtboxQuery.Location = new Point(txtboxQueryOriginalLocationX, txtboxQuery.Location.Y);
+                txtboxQuery.Size = txtboxQueryOriginalSize;
+                txtboxCustomTemplateType.Enabled = false;
+                txtboxCustomTemplateType.Visible = false;
+                queryData.CustomTemplateName = string.Empty;
+            }
+        }
 
 		private void textboxQuery_TextChanged(object sender, EventArgs e)
 		{
@@ -145,7 +165,12 @@ namespace CustomWebSearch
 		{
 			var button = sender as Button;
 			var index = int.Parse((string)button.Tag);
-			package.QueryToWebBrowser(index, "Test", true);
+			CustomWebSearchPackage.Instance.QueryToWebBrowser(index, "Test", true);
 		}
-	}
+
+        private void TxtboxCustomTemplateType_TextChanged(int index)
+        {
+            optionPage.Queries[index].CustomTemplateName = txtboxCustomTemplateTypes[index].Text;
+        }
+    }
 }

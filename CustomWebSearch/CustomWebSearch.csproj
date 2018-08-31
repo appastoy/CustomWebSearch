@@ -179,6 +179,7 @@
     <EmbeddedResource Include="VSPackage.resx">
       <MergeWithCTO>true</MergeWithCTO>
       <ManifestResourceName>VSPackage</ManifestResourceName>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -203,7 +204,7 @@
   <Import Project="..\packages\Microsoft.VSSDK.BuildTools.15.8.3247\build\Microsoft.VSSDK.BuildTools.targets" Condition="Exists('..\packages\Microsoft.VSSDK.BuildTools.15.8.3247\build\Microsoft.VSSDK.BuildTools.targets')" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName)==Release (
-	"$(SolutionDir)\BatchScripts\CopyVsixToOutput.bat" "$(SolutionDir)" "$(ProjectDir)" "$(TargetDir)" "$(TargetName)" "source.extension.vsixmanifest"
+	"$(SolutionDir)\BatchScripts\CopyToOutput.bat" "$(SolutionDir)" "$(TargetDir)" "$(TargetName)" ".vsix"
 )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

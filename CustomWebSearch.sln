@@ -8,7 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0ECA9A6D-9FA7-4904-A989-8CA911ACD3FD}"
 	ProjectSection(SolutionItems) = preProject
 		BatchScripts\CalculateMD5.bat = BatchScripts\CalculateMD5.bat
-		BatchScripts\CopyVsixToOutput.bat = BatchScripts\CopyVsixToOutput.bat
+		BatchScripts\CopyToOutput.bat = BatchScripts\CopyToOutput.bat
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
 	EndProjectSection

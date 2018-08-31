@@ -46,14 +46,25 @@
         <Parent guid="guidCustomWebSearchPackageCmdSet" id="cmdidMenuMain"/>
       </Group>
 
+      <Group guid="guidCustomWebSearchPackageCmdSet" id="groupContext" priority="0x0000">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN"/>
+      </Group>
+
     </Groups>
     
     <Menus>
       <Menu guid="guidCustomWebSearchPackageCmdSet" id="cmdidMenuMain" priority="0x0000" type="Menu">
         <Parent guid="guidCustomWebSearchPackageCmdSet" id="groupMain" />
+        <CommandFlag>TextChanges</CommandFlag>
         <Strings>
-          <CommandName>Custom Web Search</CommandName>
-          <ButtonText>Custom Web Search</ButtonText>
+          <ButtonText>Custom Web Search(W)</ButtonText>
+      </Strings>
+      </Menu>
+      <Menu guid="guidCustomWebSearchPackageCmdSet" id="cmdidMenuMain" priority="0x0000" type="Menu">
+        <Parent guid="guidCustomWebSearchPackageCmdSet" id="groupContext" />
+        <CommandFlag>TextChanges</CommandFlag>
+        <Strings>
+          <ButtonText>Custom Web Search(W)</ButtonText>
         </Strings>
       </Menu>
     </Menus>
@@ -66,9 +77,13 @@
       <Button guid="guidCustomWebSearchPackageCmdSet" id="cmdidQuery1" priority="0x0100" type="Button">
         <Parent guid="guidCustomWebSearchPackageCmdSet" id="groupSub" />
         <Icon guid="guidImages" id="bmpPicSearch" />
-        <CommandFlag>DefaultDisabled</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
         <Strings>
-          <CommandName>Query 1</CommandName>
+          <CommandName>CustomWebSearch.Query1</CommandName>
+          <CanonicalName>CustomWebSearch.Query1</CanonicalName>
+          <LocCanonicalName>CustomWebSearch.Query1</LocCanonicalName>
           <ButtonText>Query 1</ButtonText>
         </Strings>
       </Button>
@@ -76,9 +91,13 @@
       <Button guid="guidCustomWebSearchPackageCmdSet" id="cmdidQuery2" priority="0x0101" type="Button">
         <Parent guid="guidCustomWebSearchPackageCmdSet" id="groupSub" />
         <Icon guid="guidImages" id="bmpPicSearch" />
-        <CommandFlag>DefaultDisabled</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
         <Strings>
-          <CommandName>Query 2</CommandName>
+          <CommandName>CustomWebSearch.Query2</CommandName>
+          <CanonicalName>CustomWebSearch.Query2</CanonicalName>
+          <LocCanonicalName>CustomWebSearch.Query2</LocCanonicalName>
           <ButtonText>Query 2</ButtonText>
         </Strings>
       </Button>
@@ -86,9 +105,13 @@
       <Button guid="guidCustomWebSearchPackageCmdSet" id="cmdidQuery3" priority="0x0102" type="Button">
         <Parent guid="guidCustomWebSearchPackageCmdSet" id="groupSub" />
         <Icon guid="guidImages" id="bmpPicSearch" />
-        <CommandFlag>DefaultDisabled</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
         <Strings>
-          <CommandName>Query 3</CommandName>
+          <CommandName>CustomWebSearch.Query3</CommandName>
+          <CanonicalName>CustomWebSearch.Query3</CanonicalName>
+          <LocCanonicalName>CustomWebSearch.Query3</LocCanonicalName>
           <ButtonText>Query 3</ButtonText>
         </Strings>
       </Button>
@@ -96,9 +119,13 @@
       <Button guid="guidCustomWebSearchPackageCmdSet" id="cmdidQuery4" priority="0x0103" type="Button">
         <Parent guid="guidCustomWebSearchPackageCmdSet" id="groupSub" />
         <Icon guid="guidImages" id="bmpPicSearch" />
-        <CommandFlag>DefaultDisabled</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
         <Strings>
-          <CommandName>Query 4</CommandName>
+          <CommandName>CustomWebSearch.Query4</CommandName>
+          <CanonicalName>CustomWebSearch.Query4</CanonicalName>
+          <LocCanonicalName>CustomWebSearch.Query4</LocCanonicalName>
           <ButtonText>Query 4</ButtonText>
         </Strings>
       </Button>
@@ -106,9 +133,13 @@
       <Button guid="guidCustomWebSearchPackageCmdSet" id="cmdidQuery5" priority="0x0104" type="Button">
         <Parent guid="guidCustomWebSearchPackageCmdSet" id="groupSub" />
         <Icon guid="guidImages" id="bmpPicSearch" />
-        <CommandFlag>DefaultDisabled</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
         <Strings>
-          <CommandName>Query 5</CommandName>
+          <CommandName>CustomWebSearch.Query5</CommandName>
+          <CanonicalName>CustomWebSearch.Query5</CanonicalName>
+          <LocCanonicalName>CustomWebSearch.Query5</LocCanonicalName>
           <ButtonText>Query 5</ButtonText>
         </Strings>
       </Button>
@@ -116,9 +147,13 @@
       <Button guid="guidCustomWebSearchPackageCmdSet" id="cmdidQuery6" priority="0x0105" type="Button">
         <Parent guid="guidCustomWebSearchPackageCmdSet" id="groupSub" />
         <Icon guid="guidImages" id="bmpPicSearch" />
-        <CommandFlag>DefaultDisabled</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
         <Strings>
-          <CommandName>Query 6</CommandName>
+          <CommandName>CustomWebSearch.Query6</CommandName>
+          <CanonicalName>CustomWebSearch.Query6</CanonicalName>
+          <LocCanonicalName>CustomWebSearch.Query6</LocCanonicalName>
           <ButtonText>Query 6</ButtonText>
         </Strings>
       </Button>
@@ -126,9 +161,13 @@
       <Button guid="guidCustomWebSearchPackageCmdSet" id="cmdidQuery7" priority="0x0106" type="Button">
         <Parent guid="guidCustomWebSearchPackageCmdSet" id="groupSub" />
         <Icon guid="guidImages" id="bmpPicSearch" />
-        <CommandFlag>DefaultDisabled</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
         <Strings>
-          <CommandName>Query 7</CommandName>
+          <CommandName>CustomWebSearch.Query7</CommandName>
+          <CanonicalName>CustomWebSearch.Query7</CanonicalName>
+          <LocCanonicalName>CustomWebSearch.Query7</LocCanonicalName>
           <ButtonText>Query 7</ButtonText>
         </Strings>
       </Button>
@@ -136,9 +175,13 @@
         <Button guid="guidCustomWebSearchPackageCmdSet" id="cmdidQuery8" priority="0x0107" type="Button">
           <Parent guid="guidCustomWebSearchPackageCmdSet" id="groupSub" />
           <Icon guid="guidImages" id="bmpPicSearch" />
-          <CommandFlag>DefaultDisabled</CommandFlag>
+          <CommandFlag>DefaultInvisible</CommandFlag>
+          <CommandFlag>DynamicVisibility</CommandFlag>
+          <CommandFlag>TextChanges</CommandFlag>
           <Strings>
-            <CommandName>Query 8</CommandName>
+            <CommandName>CustomWebSearch.Query8</CommandName>
+            <CanonicalName>CustomWebSearch.Query8</CanonicalName>
+            <LocCanonicalName>CustomWebSearch.Query8</LocCanonicalName>
             <ButtonText>Query 8</ButtonText>
           </Strings>
         </Button>
@@ -146,9 +189,13 @@
         <Button guid="guidCustomWebSearchPackageCmdSet" id="cmdidQuery9" priority="0x0108" type="Button">
           <Parent guid="guidCustomWebSearchPackageCmdSet" id="groupSub" />
           <Icon guid="guidImages" id="bmpPicSearch" />
-          <CommandFlag>DefaultDisabled</CommandFlag>
+          <CommandFlag>DefaultInvisible</CommandFlag>
+          <CommandFlag>DynamicVisibility</CommandFlag>
+          <CommandFlag>TextChanges</CommandFlag>
           <Strings>
-            <CommandName>Query 9</CommandName>
+            <CommandName>CustomWebSearch.Query9</CommandName>
+            <CanonicalName>CustomWebSearch.Query9</CanonicalName>
+            <LocCanonicalName>CustomWebSearch.Query9</LocCanonicalName>
             <ButtonText>Query 9</ButtonText>
           </Strings>
         </Button>
@@ -156,9 +203,13 @@
         <Button guid="guidCustomWebSearchPackageCmdSet" id="cmdidQuery10" priority="0x0109" type="Button">
           <Parent guid="guidCustomWebSearchPackageCmdSet" id="groupSub" />
           <Icon guid="guidImages" id="bmpPicSearch" />
-          <CommandFlag>DefaultDisabled</CommandFlag>
+          <CommandFlag>DefaultInvisible</CommandFlag>
+          <CommandFlag>DynamicVisibility</CommandFlag>
+          <CommandFlag>TextChanges</CommandFlag>
           <Strings>
-            <CommandName>Query 10</CommandName>
+            <CommandName>CustomWebSearch.Query10</CommandName>
+            <CanonicalName>CustomWebSearch.Query10</CanonicalName>
+            <LocCanonicalName>CustomWebSearch.Query10</LocCanonicalName>
             <ButtonText>Query 10</ButtonText>
           </Strings>
         </Button>
@@ -166,9 +217,12 @@
       <Button guid="guidCustomWebSearchPackageCmdSet" id="cmdOpenOption" priority="0x2000" type="Button">
           <Parent guid="guidCustomWebSearchPackageCmdSet" id="groupSub2" />
           <Icon guid="guidImages" id="bmpPic1" />
+          <CommandFlag>TextChanges</CommandFlag>
           <Strings>
-            <CommandName>Open Option</CommandName>
-            <ButtonText>Open Option...</ButtonText>
+            <CommandName>CustomWebSearch.OpenOption</CommandName>
+            <CanonicalName>CustomWebSearch.OpenOption</CanonicalName>
+            <LocCanonicalName>CustomWebSearch.OpenOption</LocCanonicalName>
+            <ButtonText>Open Option(O)...</ButtonText>
           </Strings>
         </Button>
     </Buttons>
@@ -211,6 +265,7 @@
       <IDSymbol name="groupMain" value="0x1010" />
       <IDSymbol name="groupSub" value="0x1001" />
       <IDSymbol name="groupSub2" value="0x1002" />
+      <IDSymbol name="groupContext" value="0x1020" />
       
       <IDSymbol name="cmdidMenuMain" value="0x1100" />
       <IDSymbol name="cmdidQuery1" value="0x1200" />
