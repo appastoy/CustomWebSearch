@@ -22,3 +22,7 @@ This extension has 10 queries that you can edit.
  - Query  9 (__Ctrl+F1, 9__)
  - Query 10 (__Ctrl+F1, 0__)
  - Open Option (__Ctrl+F1, `__)
+
+## Version History
+ - Ver. 1.1 - Add Context Menu.
+ - Ver. 1.0 - Initial Released.
