@@ -1,7 +1,10 @@
 ### Custom Web Search
+
+- [Go to GibHub](https://github.com/appastoy/CustomWebSearch)  
+- [Go to Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=appastoy82.CustomWebSearch2)
+
 This extension helps web search for keyword you selected in text editor.  
-You can select the web browser you want.  
-It provides templates of web query format.
+You can select the web browser you want. And it also provides templates of web query format.
   - Google Search - https://www.google.com/search?q={QUERY}
   - Google Translate - https://translate.google.com/?hl=en#en/ko/{QUERY}
   - Microsoft MSDN - https://social.msdn.microsoft.com/search/en-US?query={QUERY}

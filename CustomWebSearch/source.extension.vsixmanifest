@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="CustomWebSearch.e1540dcb-f046-492e-8b6c-6c4bd23a38ab" Version="1.2" Language="en-US" Publisher="appastoy" />
-        <DisplayName>CustomWebSearch</DisplayName>
-        <Description xml:space="preserve">It's a visual studio extension for custom web search your selected keyword in text editor.</Description>
+        <Identity Id="CustomWebSearch.e1540dcb-f046-492e-8b6c-6c4bd23a38ac" Version="1.2" Language="en-US" Publisher="appastoy" />
+        <DisplayName>Custom Web Search</DisplayName>
+        <Description xml:space="preserve">This is a Visual Studio extension for custom web search for selected keywords in a text editor.</Description>
         <MoreInfo>https://github.com/appastoy/CustomWebSearch</MoreInfo>
         <License>LICENSE.txt</License>
+        <Icon>Icon.png</Icon>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0, 16.0)" />
