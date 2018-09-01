@@ -9,8 +9,11 @@ It provides templates of web query format.
   - Unity Document - https://docs.unity3d.com/ScriptReference/30_search.html?q={QUERY}
   - Unity Answer - https://answers.unity.com/search.html?q={QUERY}
 
+> Option Page  
+> 
+![Option Page](Screenshot/OptionPage.png)
 
-## How to use ...
+### How to use ...
 This extension has 10 queries that you can edit.
  - Query  1 (__Ctrl+F1, 1__)
  - Query  2 (__Ctrl+F1, 2__)
@@ -24,7 +27,15 @@ This extension has 10 queries that you can edit.
  - Query 10 (__Ctrl+F1, 0__)
  - Open Option (__Ctrl+F1, `__)
 
-## Version History
+> Edit Menu  
+> 
+![Edit Menu](Screenshot/EditMenu.png)
+
+> Context Menu  
+> 
+![Context Menu](Screenshot/ContextMenu.png)
+
+### Version History
  - Ver. 1.2 - Support option save, load.
  - Ver. 1.1 - Add Context Menu.
  - Ver. 1.0 - Initial Released.
