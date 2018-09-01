@@ -25,5 +25,6 @@ This extension has 10 queries that you can edit.
  - Open Option (__Ctrl+F1, `__)
 
 ## Version History
+ - Ver. 1.2 - Support option save, load.
  - Ver. 1.1 - Add Context Menu.
  - Ver. 1.0 - Initial Released.
