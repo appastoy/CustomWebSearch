@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2047
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32002.261
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomWebSearch", "CustomWebSearch\CustomWebSearch.csproj", "{91464959-71C5-44B2-9856-0B83C586D7D0}"
 EndProject
@@ -9,11 +9,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		BatchScripts\CalculateMD5.bat = BatchScripts\CalculateMD5.bat
 		BatchScripts\CopyToOutput.bat = BatchScripts\CopyToOutput.bat
+		CustomWebSearchPackage.vsct = CustomWebSearchPackage.vsct
+		Icon.png = Icon.png
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CustomWebSearch.Shared", "CustomWebSearch.Shared\CustomWebSearch.Shared.shproj", "{E00DB571-48EB-44BA-A712-599587A96FB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomWebSearch2022", "CustomWebSearch2022\CustomWebSearch2022.csproj", "{364CBE8C-3966-4CD4-81EF-613095BC13A1}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		CustomWebSearch.Shared\CustomWebSearch.Shared.projitems*{364cbe8c-3966-4cd4-81ef-613095bc13a1}*SharedItemsImports = 4
+		CustomWebSearch.Shared\CustomWebSearch.Shared.projitems*{91464959-71c5-44b2-9856-0b83c586d7d0}*SharedItemsImports = 4
+		CustomWebSearch.Shared\CustomWebSearch.Shared.projitems*{e00db571-48eb-44ba-a712-599587a96fb9}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -23,6 +34,10 @@ Global
 		{91464959-71C5-44B2-9856-0B83C586D7D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91464959-71C5-44B2-9856-0B83C586D7D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91464959-71C5-44B2-9856-0B83C586D7D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{364CBE8C-3966-4CD4-81EF-613095BC13A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{364CBE8C-3966-4CD4-81EF-613095BC13A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{364CBE8C-3966-4CD4-81EF-613095BC13A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{364CBE8C-3966-4CD4-81EF-613095BC13A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
