@@ -1,7 +1,8 @@
 ### Custom Web Search
 
 - [Go to GibHub](https://github.com/appastoy/CustomWebSearch)  
-- [Go to Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=appastoy82.CustomWebSearch2)
+- [Go to Visual Studio Marketplace (VS2017-19)](https://marketplace.visualstudio.com/items?itemName=appastoy82.CustomWebSearch2)
+- [Go to Visual Studio Marketplace (VS2022)](https://marketplace.visualstudio.com/items?itemName=appastoy82.CustomWebSearch2022)
 
 This extension helps web search for keyword you selected in text editor.  
 You can select the web browser you want. And it also provides templates of web query format.
@@ -39,6 +40,7 @@ This extension has 10 queries that you can edit.
 ![Context Menu](Screenshot/ContextMenu.png)
 
 ### Version History
+ - Ver. 1.3.1 - Support Visual Studio 2019 and 2022.
  - Ver. 1.2 - Support option save, load.
  - Ver. 1.1 - Add Context Menu.
  - Ver. 1.0 - Initial Released.
